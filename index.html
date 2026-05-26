@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Aligned & Editable)</title>
+  <title>Master Client Database Viewer (Sorted Default)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -48,8 +48,8 @@
           <div class="flex items-center gap-1">
             <span class="text-gray-400 font-bold uppercase tracking-wider text-[10px]">Sort:</span>
             <select id="sortBySelect" onchange="toggleSortingCriteria()" class="bg-gray-100 border border-gray-300 rounded px-1.5 py-1 text-gray-700 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer">
+              <option value="Sheet Name" selected>By Sheet Name</option>
               <option value="Primary Client Name">By Client Name</option>
-              <option value="Sheet Name">By Sheet Name</option>
             </select>
           </div>
           
@@ -104,7 +104,8 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
-    let currentSortField = 'Primary Client Name'; 
+    // Sort State Controllers (Default configured to Sheet Name / A-Z)
+    let currentSortField = 'Sheet Name'; 
     let currentSortOrder = 'ASC';                
 
     const fileInput = document.getElementById('jsonFileInput');
