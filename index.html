@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Editable & Sortable)</title>
+  <title>Master Client Database Viewer (Aligned & Editable)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -104,9 +104,8 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
-    // Sort State Controllers
-    let currentSortField = 'Primary Client Name'; // default sorting attribute field
-    let currentSortOrder = 'ASC';                // default sequence order (A to Z)
+    let currentSortField = 'Primary Client Name'; 
+    let currentSortOrder = 'ASC';                
 
     const fileInput = document.getElementById('jsonFileInput');
     const searchInput = document.getElementById('searchInput');
@@ -131,7 +130,7 @@
         })
         .then(data => {
           database = data;
-          applyFilteringAndSorting(true); // Initial state population loop
+          applyFilteringAndSorting(true); 
           loadStatus.textContent = "Source: padwa.json (Auto)";
           loadStatus.className = "text-xs font-mono bg-emerald-700 text-emerald-100 px-3 py-1 rounded-md";
           exportBtn.classList.remove('hidden');
@@ -169,18 +168,15 @@
       reader.readAsText(file);
     });
 
-    // Handle Search Queries Processing Block
     searchInput.addEventListener('input', () => {
-      applyFilteringAndSorting(true); // Reset selected indexing item focus during dynamic string querying shifts
+      applyFilteringAndSorting(true); 
     });
 
-    // Change Sorting Target Field Method 
     function toggleSortingCriteria() {
       currentSortField = sortBySelect.value;
-      applyFilteringAndSorting(false); // Retain active family selection context view window frame if visible
+      applyFilteringAndSorting(false); 
     }
 
-    // Change Order Mode method trigger (A-Z vs Z-A)
     function changeSortOrder(order) {
       currentSortOrder = order;
       if (order === 'ASC') {
@@ -193,12 +189,10 @@
       applyFilteringAndSorting(false);
     }
 
-    // Centered Consolidated Filter & Sort Sync Matrix Pipeline Box Engine
     function applyFilteringAndSorting(resetActiveIndex = false) {
       let query = searchInput.value.toLowerCase().trim();
       let currentlySelectedSheet = (activeIndex !== -1 && filteredDatabase[activeIndex]) ? filteredDatabase[activeIndex]["Sheet Name"] : null;
 
-      // 1. Filter Pass Elements
       if (!query) {
         filteredDatabase = [...database];
       } else {
@@ -215,12 +209,10 @@
         });
       }
 
-      // 2. Sort Pass Elements
       filteredDatabase.sort((a, b) => {
         let valA = String(a[currentSortField] || "").toLowerCase().trim();
         let valB = String(b[currentSortField] || "").toLowerCase().trim();
         
-        // Fallback checks for empty entries alignment ordering boundaries blocks mapping
         if (!valA) valA = "zzz";
         if (!valB) valB = "zzz";
 
@@ -229,11 +221,9 @@
         return 0;
       });
 
-      // 3. Index Recalibration Management Sync Check
       if (resetActiveIndex) {
         activeIndex = filteredDatabase.length > 0 ? 0 : -1;
       } else if (currentlySelectedSheet) {
-        // Find position index tracking shift coordinates post-sorting mapping transformation
         let newIdx = filteredDatabase.findIndex(f => f["Sheet Name"] === currentlySelectedSheet);
         activeIndex = newIdx !== -1 ? newIdx : (filteredDatabase.length > 0 ? 0 : -1);
       }
@@ -261,7 +251,6 @@
         const div = document.createElement('div');
         div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-emerald-50/60 border-emerald-500 shadow-sm' : 'border-transparent hover:bg-gray-50'}`;
         
-        // Dynamic title accent highlight balancing depends on sorted context layout
         const mainTitleText = currentSortField === 'Sheet Name' ? (item["Sheet Name"] || 'Unnamed Sheet') : (item["Primary Client Name"] || 'Unnamed Client');
         const secondaryTitleText = currentSortField === 'Sheet Name' ? (item["Primary Client Name"] || 'Unnamed Client') : (item["Sheet Name"] || 'N/A');
 
@@ -287,7 +276,6 @@
       });
     }
 
-    // Interactive Inline Save Sync Matrix Engine
     function syncEdit(element, type, field, childIndex = null, planIndex = null, logIndex = null) {
       let currentClient = filteredDatabase[activeIndex];
       let originalIndex = database.findIndex(f => f["Sheet Name"] === currentClient["Sheet Name"]);
@@ -314,7 +302,6 @@
         }
       }
       
-      // Re-trigger synchronization sorting parameters without losing layout state focus
       if (field === 'Primary Client Name' || field === 'Additional Name' || field === 'Sheet Name') {
         applyFilteringAndSorting(false);
       }
@@ -324,7 +311,6 @@
       return `contenteditable="true" onblur="syncEdit(this, '${type}', '${field}', ${childIndex}, ${planIndex}, ${logIndex})" class="focus:bg-amber-50 focus:outline-none px-1 rounded transition border border-transparent focus:border-amber-200"`;
     }
 
-    // Currency numerical formatter block checks configuration parsing strings numbers balances
     function formatCurrency(val) {
       if (val === undefined || val === null || String(val).trim() === "") return "—";
       let str = String(val).trim();
@@ -406,24 +392,24 @@
               <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs whitespace-nowrap divide-y divide-gray-200">
                   <thead class="bg-gray-100/60 font-bold text-gray-500 uppercase tracking-wider text-[10px] divide-x divide-gray-200">
-                    <tr>
-                      <th class="px-4 py-2">Plan ID</th>
-                      <th class="px-4 py-2">Plan Name</th>
-                      <th class="px-4 py-2">Age</th>
-                      <th class="px-4 py-2">SIN Status</th>
-                      <th class="px-4 py-2">Paying Cont.</th>
-                      <th class="px-4 py-2">Frequency</th>
-                      <th class="px-4 py-2">Principle</th>
-                      <th class="px-4 py-2">CLB</th>
-                      <th class="px-4 py-2">Can. Grants</th>
-                      <th class="px-4 py-2">Que. Grants</th>
-                      <th class="px-4 py-2 text-emerald-900 bg-emerald-50/40">Current Value</th>
-                      <th class="px-4 py-2">Asset Funds Mix</th>
-                      <th class="px-4 py-2">Transfered</th>
-                      <th class="px-4 py-2">Date</th>
+                    <tr class="text-left">
+                      <th class="px-4 py-3 text-center">Plan ID</th>
+                      <th class="px-4 py-3 text-center">Plan Name</th>
+                      <th class="px-4 py-3 text-center">Age</th>
+                      <th class="px-4 py-3 text-left">SIN Status</th>
+                      <th class="px-4 py-3 text-left">Paying Cont.</th>
+                      <th class="px-4 py-3 text-left">Frequency</th>
+                      <th class="px-4 py-3 text-left">Principle</th>
+                      <th class="px-4 py-3 text-left">CLB</th>
+                      <th class="px-4 py-3 text-left">Can. Grants</th>
+                      <th class="px-4 py-3 text-left">Que. Grants</th>
+                      <th class="px-4 py-3 text-left text-emerald-950 bg-emerald-50/40">Current Value</th>
+                      <th class="px-4 py-3 text-left">Asset Funds Mix</th>
+                      <th class="px-4 py-3 text-left">Transfered</th>
+                      <th class="px-4 py-3 text-left">Date</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-gray-200 font-medium text-gray-700 divide-x divide-gray-100">
+                  <tbody class="divide-y divide-gray-200 font-medium text-gray-700 font-mono divide-x divide-gray-100 text-left">
           `;
 
           if (!child.Plans || child.Plans.length === 0) {
@@ -431,21 +417,21 @@
           } else {
             child.Plans.forEach((plan, pIndex) => {
               html += `
-                <tr class="hover:bg-gray-50/60 transition font-mono">
-                  <td class="px-4 py-2.5 font-bold text-gray-900" ${makeEditable('plan', 'Plan id', cIndex, pIndex)}>${plan["Plan id"] || ''}</td>
-                  <td class="px-4 py-2.5 font-bold text-gray-900" ${makeEditable('plan', 'Plan Name', cIndex, pIndex)}>${plan["Plan Name"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-900 font-bold" ${makeEditable('plan', 'Age', cIndex, pIndex)}>${plan["Age"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'SINs', cIndex, pIndex)}>${plan["SINs"] || ''}</td>
-                  <td class="px-4 py-2.5 text-emerald-700 font-bold" ${makeEditable('plan', 'Paying', cIndex, pIndex)}>${formatCurrency(plan["Paying"])}</td>
-                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Frequency', cIndex, pIndex)}>${plan["Frequency"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Principle', cIndex, pIndex)}>${formatCurrency(plan["Principle"])}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'CLB', cIndex, pIndex)}>${formatCurrency(plan["CLB"])}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Canada Grants', cIndex, pIndex)}>${formatCurrency(plan["Canada Grants"])}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Quebec Grants', cIndex, pIndex)}>${formatCurrency(plan["Quebec Grants"])}</td>
-                  <td class="px-4 py-2.5 text-emerald-700 font-black bg-emerald-50/20" ${makeEditable('plan', 'Current Value', cIndex, pIndex)}>${formatCurrency(plan["Current Value"])}</td>
-                  <td class="px-4 py-2.5 font-sans font-semibold text-gray-700 text-[11px] bg-gray-100 border border-gray-200">${renderFundsText(plan["Funds"])}</td>
-                  <td class="px-4 py-2.5 font-bold ${plan["Transfered"]==='TRUE'?'text-emerald-600':'text-gray-400'}" ${makeEditable('plan', 'Transfered', cIndex, pIndex)}>${plan["Transfered"] || ''}</td>
-                  <td class="px-4 py-2.5 text-[11px] text-gray-500" ${makeEditable('plan', 'Date', cIndex, pIndex)}>${plan["Date"] || ''}</td>
+                <tr class="hover:bg-gray-50/60 transition">
+                  <td class="px-4 py-2.5 font-bold text-gray-900 text-center" ${makeEditable('plan', 'Plan id', cIndex, pIndex)}>${plan["Plan id"] || ''}</td>
+                  <td class="px-4 py-2.5 font-bold text-gray-900 text-center" ${makeEditable('plan', 'Plan Name', cIndex, pIndex)}>${plan["Plan Name"] || ''}</td>
+                  <td class="px-4 py-2.5 text-gray-900 font-bold text-center" ${makeEditable('plan', 'Age', cIndex, pIndex)}>${plan["Age"] || ''}</td>
+                  <td class="px-4 py-2.5 text-gray-600 text-left" ${makeEditable('plan', 'SINs', cIndex, pIndex)}>${plan["SINs"] || ''}</td>
+                  <td class="px-4 py-2.5 text-emerald-700 font-bold text-left" ${makeEditable('plan', 'Paying', cIndex, pIndex)}>${formatCurrency(plan["Paying"])}</td>
+                  <td class="px-4 py-2.5 text-gray-600 text-left" ${makeEditable('plan', 'Frequency', cIndex, pIndex)}>${plan["Frequency"] || '—'}</td>
+                  <td class="px-4 py-2.5 text-gray-600 text-left" ${makeEditable('plan', 'Principle', cIndex, pIndex)}>${formatCurrency(plan["Principle"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500 text-left" ${makeEditable('plan', 'CLB', cIndex, pIndex)}>${formatCurrency(plan["CLB"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500 text-left" ${makeEditable('plan', 'Canada Grants', cIndex, pIndex)}>${formatCurrency(plan["Canada Grants"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500 text-left" ${makeEditable('plan', 'Quebec Grants', cIndex, pIndex)}>${formatCurrency(plan["Quebec Grants"])}</td>
+                  <td class="px-4 py-2.5 text-emerald-700 font-black bg-emerald-50/20 text-left" ${makeEditable('plan', 'Current Value', cIndex, pIndex)}>${formatCurrency(plan["Current Value"])}</td>
+                  <td class="px-4 py-2.5 font-sans font-semibold text-gray-700 text-[11px] bg-gray-100 border border-gray-200 text-left">${renderFundsText(plan["Funds"])}</td>
+                  <td class="px-4 py-2.5 font-bold text-left ${plan["Transfered"]==='TRUE'?'text-emerald-600':'text-gray-400'}" ${makeEditable('plan', 'Transfered', cIndex, pIndex)}>${plan["Transfered"] || ''}</td>
+                  <td class="px-4 py-2.5 text-[11px] text-purple-600 text-left" ${makeEditable('plan', 'Date', cIndex, pIndex)}>${plan["Date"] || ''}</td>
                 </tr>
               `;
             });
@@ -475,7 +461,7 @@
           html += `
             <div class="p-4 hover:bg-gray-50/50 transition flex items-start gap-4 text-xs">
               <span class="font-mono font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md min-w-[95px] text-center shadow-3xs" ${makeEditable('log', 'Date', null, null, lIndex)}>${log.Date || ''}</span>
-              <p class="text-gray-700 leading-relaxed font-medium pt-0.5" ${makeEditable('log', 'Note', null, null, lIndex)}>${log.Note || ''}</p>
+              <p class="text-gray-700 leading-relaxed font-medium pt-0.5 text-left" ${makeEditable('log', 'Note', null, null, lIndex)}>${log.Note || ''}</p>
             </div>
           `;
         });
@@ -485,10 +471,8 @@
       dossierContent.innerHTML = html;
     }
 
-    // Dynamic JSON payload download generation engine trigger
     function exportUpdatedJSON() {
       if (database.length === 0) return;
-      
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(database, null, 4));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
