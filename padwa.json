@@ -95313,20 +95313,146 @@
             }
         ]
     },
-    {
-        "Sheet Name": "Abraham Stern",
-        "Primary Client Name": "Abraham Stern - Malky Deutsch",
-        "Additional Name": "",
-        "Last Updated": "2025-11-24",
-        "Contact Information": {
-            "Phone": "(514) 358-4751",
-            "Phone (other)": "",
-            "Email": "abes6708@gmail.com",
-            "Email (other)": ""
-        },
-        "Children": [],
-        "Notes Log": []
-    },
+	{
+	        "Sheet Name": "Stern Abraham",
+	        "Primary Client Name": "Abraham Stern",
+	        "Additional Name": "Malky Deutsch",
+	        "Last Updated": "2025-11-26",
+	        "Contact Information": {
+	            "Phone": "(514) 358-4751",
+	            "Phone (other)": "",
+	            "Email": "abes6708@gmail.com",
+	            "Email (other)": ""
+	        },
+	        "Children": [
+	            {
+	                "Name": "Lipa",
+	                "D.O.B.": "2022-07-12",
+	                "Plans": [
+	                    {
+	                        "Plan id": "27085007",
+	                        "Plan Name": "CST",
+	                        "Age": "4",
+	                        "SINs": "",
+	                        "Paying": "",
+	                        "Frequency": "",
+	                        "Principle": "",
+	                        "CLB": "",
+	                        "Canada Grants": "",
+	                        "Quebec Grants": "",
+	                        "Current Value": "",
+	                        "Funds": [],
+	                        "Transfered": "",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "1825439648",
+	                        "Plan Name": "IA",
+	                        "Age": "4",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "",
+	                        "CLB": "",
+	                        "Canada Grants": "",
+	                        "Quebec Grants": "",
+	                        "Current Value": "",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "FALSE",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Pearl",
+	                "D.O.B.": "2024-05-02",
+	                "Plans": [
+	                    {
+	                        "Plan id": "28054474",
+	                        "Plan Name": "CST",
+	                        "Age": "2",
+	                        "SINs": "",
+	                        "Paying": "",
+	                        "Frequency": "",
+	                        "Principle": "",
+	                        "CLB": "",
+	                        "Canada Grants": "",
+	                        "Quebec Grants": "",
+	                        "Current Value": "",
+	                        "Funds": [],
+	                        "Transfered": "",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "1825440107",
+	                        "Plan Name": "IA",
+	                        "Age": "2",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "",
+	                        "CLB": "",
+	                        "Canada Grants": "",
+	                        "Quebec Grants": "",
+	                        "Current Value": "",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "FALSE",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Solomon",
+	                "D.O.B.": "2026-04-25",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1826629238",
+	                        "Plan Name": "IA",
+	                        "Age": "0",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "",
+	                        "CLB": "",
+	                        "Canada Grants": "",
+	                        "Quebec Grants": "",
+	                        "Current Value": "",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "New",
+	                        "Date": ""
+	                    }
+	                ]
+	            }
+	        ],
+	        "Notes Log": []
+	    },
     {
         "Sheet Name": "OBERLANDER Moishie",
         "Primary Client Name": "Moishie Oberlander",
