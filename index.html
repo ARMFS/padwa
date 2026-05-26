@@ -183,6 +183,18 @@
       });
     }
 
+    // Smart currency formatting engine helper
+    function formatCurrency(val) {
+      if (val === undefined || val === null || String(val).trim() === "") return "—";
+      let str = String(val).trim();
+      let cleanNum = str.replace(/[\$,]/g, "");
+      if (cleanNum === "" || isNaN(cleanNum)) {
+        return str;
+      }
+      let num = parseFloat(cleanNum);
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    }
+
     function renderActiveDossier() {
       if (activeIndex === -1 || !filteredDatabase[activeIndex]) {
         dossierContent.innerHTML = `
@@ -194,13 +206,11 @@
 
       const client = filteredDatabase[activeIndex];
 
-      const renderFundsBadge = (funds) => {
-        if (!funds || funds.length === 0) return `<span class="text-xs text-gray-400 italic">None</span>`;
-        return funds.map(f => `
-          <span class="inline-flex items-center bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold font-mono text-[11px] px-2 py-0.5 rounded-md shadow-2xs">
-            ${f.Percentage} ${f.Fund}
-          </span>
-        `).join(' ');
+      // Streamlined Compact Funds Text Renderer (No individual pills)
+      const renderFundsText = (funds) => {
+        if (!funds || funds.length === 0) return `<span class="text-xs text-gray-400 italic">—</span>`;
+        const textMix = funds.map(f => `${f.Percentage} ${f.Fund}`).join(', ');
+        return `<span class="font-mono text-gray-700 font-semibold text-[11px] bg-gray-100 px-2 py-1 rounded border border-gray-200">${textMix}</span>`;
       };
 
       let html = `
@@ -289,14 +299,14 @@
                   </td>
                   <td class="px-4 py-2.5 font-mono text-gray-900 font-bold">${plan["Age"] || '—'}</td>
                   <td class="px-4 py-2.5 text-gray-400 font-normal italic">${plan["SINs"] || 'Empty'}</td>
-                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-bold">${plan["Paying"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-bold">${formatCurrency(plan["Paying"])}</td>
                   <td class="px-4 py-2.5 text-gray-600">${plan["Frequency"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-mono text-gray-600">${plan["Principle"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["CLB"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["Canada Grants"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["Quebec Grants"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-black text-xs bg-emerald-50/20">${plan["Current Value"] || '—'}</td>
-                  <td class="px-4 py-2.5">${renderFundsBadge(plan["Funds"])}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-600">${formatCurrency(plan["Principle"])}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${formatCurrency(plan["CLB"])}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${formatCurrency(plan["Canada Grants"])}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${formatCurrency(plan["Quebec Grants"])}</td>
+                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-black text-xs bg-emerald-50/20">${formatCurrency(plan["Current Value"])}</td>
+                  <td class="px-4 py-2.5">${renderFundsText(plan["Funds"])}</td>
                   <td class="px-4 py-2.5 font-bold ${plan["Transfered"]==='TRUE'?'text-emerald-600':'text-gray-400'}">${plan["Transfered"] || '—'}</td>
                   <td class="px-4 py-2.5 font-mono text-[11px] text-gray-500">${plan["Date"] || '—'}</td>
                 </tr>
