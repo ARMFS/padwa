@@ -95451,8 +95451,37 @@
 	                ]
 	            }
 	        ],
-	        "Notes Log": []
-	    },
+	        "Notes Log": [
+	            {
+	                "Date": "2025-12-09",
+	                "Note": "opened a RESP monthly250 for Lipa and Pearl, transfered both from CST"
+	            },
+	            {
+	                "Date": "2025-12-29",
+	                "Note": "was traker for Lipa , sent in new signature form"
+	            },
+	            {
+	                "Date": "2026-01-20",
+	                "Note": "Resent Lipa's transfer form with the correct DOB"
+	            },
+	            {
+	                "Date": "2026-01-20",
+	                "Note": "sent LTA form for both plans"
+	            },
+	            {
+	                "Date": "2026-02-03",
+	                "Note": "Sent in CLB form for Lipa, since we corrected DOB"
+	            },
+	            {
+	                "Date": "2026-05-13",
+	                "Note": "Open new plan for Solomon - $250 monthly starting May 20 Done May 13 2026"
+	            },
+	            {
+	                "Date": "2026-05-19",
+	                "Note": "Transfers are taking a long time IA will will refax to CST"
+	            }
+	        ]
+		},
     {
         "Sheet Name": "OBERLANDER Moishie",
         "Primary Client Name": "Moishie Oberlander",
