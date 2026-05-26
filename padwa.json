@@ -409,8 +409,8 @@
     },
     {
         "Sheet Name": "Biston- Bracha Hochhauser",
-        "Primary Client Name": "Aron Biston- Bracha Hochhauser",
-        "Additional Name": "",
+        "Primary Client Name": "Aron Biston",
+        "Additional Name": "Bracha Hochhauser",
         "Last Updated": "2026-01-07",
         "Contact Information": {
             "Phone": "(514) 277-4792",
@@ -534,8 +534,8 @@
     },
     {
         "Sheet Name": "Weiser Shloime",
-        "Primary Client Name": "",
-        "Additional Name": "Weiser Shloime",
+        "Primary Client Name": "Shloime Weiser",
+        "Additional Name": "Sara Lefkowitz",
         "Last Updated": "2025-12-09",
         "Contact Information": {
             "Phone": "(845) 459-0286",
@@ -580,7 +580,7 @@
     },
     {
         "Sheet Name": "Berger Devorah",
-        "Primary Client Name": "Berger Devorah",
+        "Primary Client Name": "Devorah Berger",
         "Additional Name": "",
         "Last Updated": "2025-12-09",
         "Contact Information": {
@@ -655,34 +655,6 @@
             "Phone": "(514) 794-8956",
             "Phone (other)": "",
             "Email": "shloimys@gmail.com",
-            "Email (other)": ""
-        },
-        "Children": [],
-        "Notes Log": []
-    },
-    {
-        "Sheet Name": "Annual review",
-        "Primary Client Name": "",
-        "Additional Name": "",
-        "Last Updated": "",
-        "Contact Information": {
-            "Phone": "",
-            "Phone (other)": "",
-            "Email": "menachem8600@gmail.com",
-            "Email (other)": "2702713@gmail.com"
-        },
-        "Children": [],
-        "Notes Log": []
-    },
-    {
-        "Sheet Name": "Yearly payments",
-        "Primary Client Name": "",
-        "Additional Name": "",
-        "Last Updated": "",
-        "Contact Information": {
-            "Phone": "",
-            "Phone (other)": "",
-            "Email": "",
             "Email (other)": ""
         },
         "Children": [],
@@ -9127,8 +9099,8 @@
     },
     {
         "Sheet Name": "Bineth Solomon",
-        "Primary Client Name": "Solomon Bineth / Oppman",
-        "Additional Name": "",
+        "Primary Client Name": "Solomon Bineth",
+        "Additional Name": "Oppman",
         "Last Updated": "2026-02-23",
         "Contact Information": {
             "Phone": "(514) 270-4567",
@@ -38861,8 +38833,8 @@
     },
     {
         "Sheet Name": "Hirschfeld Faigy",
-        "Primary Client Name": "Faigy Hirschfeld - Aron Gluck",
-        "Additional Name": "",
+        "Primary Client Name": "Aron Gluck",
+        "Additional Name": "Faigy Hirschfeld",
         "Last Updated": "2026-01-12",
         "Contact Information": {
             "Phone": "(438) 365-1824",
@@ -113275,5 +113247,153 @@
                 "Note": ""
             }
         ]
-    }
+    },
+	{
+	        "Sheet Name": "Zoldan Moshe",
+	        "Primary Client Name": "Moshe Zoldan",
+	        "Additional Name": "",
+	        "Last Updated": "2025-09-26",
+	        "Contact Information": {
+	            "Phone": "(514) 586-5115",
+	            "Phone (other)": "(514) 273-4687",
+	            "Email": "5865115m@gmail.com",
+	            "Email (other)": ""
+	        },
+	        "Children": [
+	            {
+	                "Name": "Esther",
+	                "D.O.B.": "2008-06-08",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1818923755",
+	                        "Plan Name": "IA",
+	                        "Age": "18",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$22,002.50",
+	                        "CLB": "$1,600.00",
+	                        "Canada Grants": "$5,400.50",
+	                        "Quebec Grants": "$2,000.25",
+	                        "Current Value": "$42,064.94",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "30%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "10%"
+	                            },
+	                            {
+	                                "Fund": "LOW RISK",
+	                                "Percentage": "60%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": "True"
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Devoiry",
+	                "D.O.B.": "2014-03-09",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1818923658",
+	                        "Plan Name": "IA",
+	                        "Age": "12",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$21,902.50",
+	                        "CLB": "$1,400.00",
+	                        "Canada Grants": "$5,380.50",
+	                        "Quebec Grants": "$2,390.25",
+	                        "Current Value": "$39,726.31",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": "True"
+	                    }
+	                ]
+	            }
+	        ],
+	        "Notes Log": [
+	            {
+	                "Date": "2026-05-02",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Sent Email To Client With Instructions To Make Online Ia Account",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Sent In Transfer Forms",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Sent Again For Esther Transfer Form",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Meet Client For Dca Sent In Form",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Hershel Maturity Money Received",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Switched Esther Hisa To Prudent",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Change Investment Instructions For Esther To 40 20 40",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "2026-05-03",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "2026-05-16",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Sent Email With A Update",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Switched Esther 30/10/30/30",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Sent Email With A Update",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "Called Left Message",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "2000-05-26",
+	                "Note": ""
+	            },
+	            {
+	                "Date": "2000-05-26",
+	                "Note": ""
+	            }
+	        ]
+	    }
 ]
+
+
