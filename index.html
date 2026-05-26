@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Editable)</title>
+  <title>Master Client Database Viewer (Secure & Editable)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -13,7 +13,7 @@
       <div class="bg-white text-emerald-600 font-black px-3 py-1.5 rounded-lg shadow text-xl tracking-tight">DB</div>
       <div>
         <h1 class="text-xl font-bold leading-tight tracking-tight">Client Integrity Dashboard</h1>
-        <p class="text-xs text-emerald-100">Click any value directly in the dashboard profile view below to edit values in real-time</p>
+        <p class="text-xs text-emerald-100">Secure Client Database Workspace Matrix — Inline Editing Enabled</p>
       </div>
     </div>
     <div class="flex items-center gap-3">
@@ -47,7 +47,7 @@
       
       <div id="clientList" class="flex-1 overflow-y-auto divide-y divide-gray-100">
         <div class="p-8 text-center text-gray-400 text-sm">
-          <p class="font-medium mb-1">Loading Data...</p>
+          <p class="font-medium mb-1">Loading Data Matrix...</p>
         </div>
       </div>
     </aside>
@@ -63,6 +63,26 @@
   </div>
 
   <script>
+    // === SECURE PASSWORD CHECKPOINT LAYER ===
+    const ACCESS_KEY = "LoveyourfellowJew770!!";
+    
+    if (sessionStorage.getItem("authenticated") !== "true") {
+      let challenge = prompt("This database dashboard is private. Please enter the master security password:");
+      
+      if (challenge === ACCESS_KEY) {
+        sessionStorage.setItem("authenticated", "true");
+      } else {
+        alert("Access denied. Invalid signature sequence.");
+        document.body.innerHTML = `
+          <div class="h-screen bg-gray-900 text-red-500 font-mono font-bold flex flex-col items-center justify-center space-y-2">
+            <div class="text-2xl tracking-widest uppercase">403 - FORBIDDEN</div>
+            <div class="text-xs text-gray-500">The credentials supplied do not match the database authorization protocols.</div>
+          </div>`;
+        throw new Error("Authentication failure: Script halted.");
+      }
+    }
+    // =========================================
+
     let database = [];
     let filteredDatabase = [];
     let activeIndex = -1;
@@ -128,7 +148,7 @@
       reader.readAsText(file);
     });
 
-    // Search query processor
+    // Search filter engine query processor
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
       if (!query) {
@@ -195,7 +215,6 @@
     // Interactive Inline Save Sync Matrix Engine
     function syncEdit(element, type, field, childIndex = null, planIndex = null, logIndex = null) {
       let currentClient = filteredDatabase[activeIndex];
-      // Find matching item index in the original master database to prevent search filtering offset mismatches
       let originalIndex = database.findIndex(f => f["Sheet Name"] === currentClient["Sheet Name"]);
       if (originalIndex === -1) return;
 
@@ -220,15 +239,25 @@
         }
       }
       
-      // Update sidebar listing visibility smoothly
       if (field === 'Primary Client Name' || field === 'Additional Name') {
         renderDirectoryList();
       }
     }
 
-    // Direct text rendering wrapper to maintain consistency during manual modification tasks
     function makeEditable(type, field, childIndex = null, planIndex = null, logIndex = null) {
       return `contenteditable="true" onblur="syncEdit(this, '${type}', '${field}', ${childIndex}, ${planIndex}, ${logIndex})" class="focus:bg-amber-50 focus:outline-none px-1 rounded transition border border-transparent focus:border-amber-200"`;
+    }
+
+    // Currency text wrapper formatter
+    function formatCurrency(val) {
+      if (val === undefined || val === null || String(val).trim() === "") return "—";
+      let str = String(val).trim();
+      let cleanNum = str.replace(/[\$,]/g, "");
+      if (cleanNum === "" || isNaN(cleanNum)) {
+        return str;
+      }
+      let num = parseFloat(cleanNum);
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
     }
 
     function renderActiveDossier() {
@@ -242,12 +271,10 @@
 
       const client = filteredDatabase[activeIndex];
 
-      // Format current active record index inside original data block array
-      let originalClientIdx = database.findIndex(f => f["Sheet Name"] === client["Sheet Name"]);
-
       const renderFundsText = (funds) => {
         if (!funds || funds.length === 0) return `<span class="text-xs text-gray-400 italic">—</span>`;
-        return funds.map(f => `${f.Percentage} ${f.Fund}`).join(', ');
+        const textMix = funds.map(f => `${f.Percentage} ${f.Fund}`).join(', ');
+        return `<span class="font-mono text-gray-700 font-semibold text-[11px] bg-gray-100 px-2 py-1 rounded border border-gray-200">${textMix}</span>`;
       };
 
       let html = `
@@ -333,13 +360,13 @@
                   <td class="px-4 py-2.5 font-bold text-gray-900" ${makeEditable('plan', 'Plan Name', cIndex, pIndex)}>${plan["Plan Name"] || ''}</td>
                   <td class="px-4 py-2.5 text-gray-900 font-bold" ${makeEditable('plan', 'Age', cIndex, pIndex)}>${plan["Age"] || ''}</td>
                   <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'SINs', cIndex, pIndex)}>${plan["SINs"] || ''}</td>
-                  <td class="px-4 py-2.5 text-emerald-700 font-bold" ${makeEditable('plan', 'Paying', cIndex, pIndex)}>${plan["Paying"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Frequency', cIndex, pIndex)}>${plan["Frequency"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Principle', cIndex, pIndex)}>${plan["Principle"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'CLB', cIndex, pIndex)}>${plan["CLB"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Canada Grants', cIndex, pIndex)}>${plan["Canada Grants"] || ''}</td>
-                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Quebec Grants', cIndex, pIndex)}>${plan["Quebec Grants"] || ''}</td>
-                  <td class="px-4 py-2.5 text-emerald-700 font-black bg-emerald-50/20" ${makeEditable('plan', 'Current Value', cIndex, pIndex)}>${plan["Current Value"] || ''}</td>
+                  <td class="px-4 py-2.5 text-emerald-700 font-bold" ${makeEditable('plan', 'Paying', cIndex, pIndex)}>${formatCurrency(plan["Paying"])}</td>
+                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Frequency', cIndex, pIndex)}>${plan["Frequency"] || '—'}</td>
+                  <td class="px-4 py-2.5 text-gray-600" ${makeEditable('plan', 'Principle', cIndex, pIndex)}>${formatCurrency(plan["Principle"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'CLB', cIndex, pIndex)}>${formatCurrency(plan["CLB"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Canada Grants', cIndex, pIndex)}>${formatCurrency(plan["Canada Grants"])}</td>
+                  <td class="px-4 py-2.5 text-gray-500" ${makeEditable('plan', 'Quebec Grants', cIndex, pIndex)}>${formatCurrency(plan["Quebec Grants"])}</td>
+                  <td class="px-4 py-2.5 text-emerald-700 font-black bg-emerald-50/20" ${makeEditable('plan', 'Current Value', cIndex, pIndex)}>${formatCurrency(plan["Current Value"])}</td>
                   <td class="px-4 py-2.5 font-sans font-semibold text-gray-700 text-[11px] bg-gray-100 border border-gray-200">${renderFundsText(plan["Funds"])}</td>
                   <td class="px-4 py-2.5 font-bold ${plan["Transfered"]==='TRUE'?'text-emerald-600':'text-gray-400'}" ${makeEditable('plan', 'Transfered', cIndex, pIndex)}>${plan["Transfered"] || ''}</td>
                   <td class="px-4 py-2.5 text-[11px] text-gray-500" ${makeEditable('plan', 'Date', cIndex, pIndex)}>${plan["Date"] || ''}</td>
@@ -382,7 +409,7 @@
       dossierContent.innerHTML = html;
     }
 
-    // Dynamic JSON Exporter download generator matrix trigger
+    // Dynamic JSON payload download generation engine trigger
     function exportUpdatedJSON() {
       if (database.length === 0) return;
       
