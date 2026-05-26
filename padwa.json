@@ -54601,77 +54601,392 @@
             }
         ]
     },
-    {
-        "Sheet Name": "Eckstein Moshe Elexander",
-        "Primary Client Name": "",
-        "Additional Name": "",
-        "Last Updated": "2026-01-29",
-        "Contact Information": {
-            "Phone": "",
-            "Phone (other)": "",
-            "Email": "moishesender@gmail.com",
-            "Email (other)": ""
-        },
-        "Children": [],
-        "Notes Log": [
-            {
-                "Date": "2023-03-23",
-                "Note": "Mature Zalmen full"
-            },
-            {
-                "Date": "2023-07-05",
-                "Note": "Opened new plan for rivky"
-            },
-            {
-                "Date": "2024-02-07",
-                "Note": "Open new plan for Meilech $150- will send SIN"
-            },
-            {
-                "Date": "2024-02-07",
-                "Note": "Change Esty and Zissy to new payments amounts"
-            },
-            {
-                "Date": "2024-02-07",
-                "Note": "Change Matis, Meilech and Esty CST to Single deposit paid up plan"
-            },
-            {
-                "Date": "2024-02-07",
-                "Note": "change Zissy to Check payments"
-            },
-            {
-                "Date": "2024-02-12",
-                "Note": "opened new plan Meilech no transfer"
-            },
-            {
-                "Date": "2024-11-19",
-                "Note": "Open a FHSA on Shaindy's name without payments"
-            },
-            {
-                "Date": "2025-02-11",
-                "Note": "Switched the investmens acording to the age"
-            },
-            {
-                "Date": "2025-02-11",
-                "Note": "Email sent with a update"
-            },
-            {
-                "Date": "2025-05-01",
-                "Note": "Opend a new plan for Yitty 250/month"
-            },
-            {
-                "Date": "2025-11-03",
-                "Note": "Email sent with a update"
-            },
-            {
-                "Date": "2025-11-26",
-                "Note": "Matured TFSA 20K"
-            },
-            {
-                "Date": "2026-01-19",
-                "Note": "Sent in maturity form for Shaindy to mature Full ,"
-            }
-        ]
-    },
+	{
+	        "Sheet Name": "Eckstein Moshe Elexander",
+	        "Primary Client Name": "Moshe Alexander Eckstein",
+	        "Additional Name": "",
+	        "Last Updated": "2026-01-26",
+	        "Contact Information": {
+	            "Phone": "",
+	            "Phone (other)": "",
+	            "Email": "moishesender@gmail.com",
+	            "Email (other)": ""
+	        },
+	        "Children": [
+	            {
+	                "Name": "Leah",
+	                "D.O.B.": "2008-07-08",
+	                "Plans": [
+	                    {
+	                        "Plan id": "15334708",
+	                        "Plan Name": "CST",
+	                        "Age": "18",
+	                        "SINs": "",
+	                        "Paying": "",
+	                        "Frequency": "",
+	                        "Principle": "$13,726.00",
+	                        "CLB": "$1,400.00",
+	                        "Canada Grants": "$4,802.00",
+	                        "Quebec Grants": "$2,364.00",
+	                        "Current Value": "$38,745.54",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "1819895194",
+	                        "Plan Name": "IA",
+	                        "Age": "18",
+	                        "SINs": "",
+	                        "Paying": "",
+	                        "Frequency": "",
+	                        "Principle": "$16,903.52",
+	                        "CLB": "$300.00",
+	                        "Canada Grants": "$2,397.62",
+	                        "Quebec Grants": "$1,236.31",
+	                        "Current Value": "$27,960.16",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "30%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "10%"
+	                            },
+	                            {
+	                                "Fund": "LOW RISK",
+	                                "Percentage": "60%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Matis",
+	                "D.O.B.": "2010-11-24",
+	                "Plans": [
+	                    {
+	                        "Plan id": "19638663",
+	                        "Plan Name": "CST",
+	                        "Age": "16",
+	                        "SINs": "",
+	                        "Paying": "",
+	                        "Frequency": "",
+	                        "Principle": "$13,872.00",
+	                        "CLB": "$1,500.00",
+	                        "Canada Grants": "$4,793.00",
+	                        "Quebec Grants": "$2,309.00",
+	                        "Current Value": "$36,117.00",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "25523058",
+	                        "Plan Name": "CST",
+	                        "Age": "16",
+	                        "SINs": "",
+	                        "Paying": "$209.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$9,579.00",
+	                        "CLB": "",
+	                        "Canada Grants": "$2,374.00",
+	                        "Quebec Grants": "$853.00",
+	                        "Current Value": "$14,300.00",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Meilech",
+	                "D.O.B.": "2013-03-03",
+	                "Plans": [
+	                    {
+	                        "Plan id": "20995121",
+	                        "Plan Name": "CST",
+	                        "Age": "13",
+	                        "SINs": "",
+	                        "Paying": "$217.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$22,727.00",
+	                        "CLB": "$1,300.00",
+	                        "Canada Grants": "$6,116.00",
+	                        "Quebec Grants": "$1,854.00",
+	                        "Current Value": "$42,052.27",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "1821482441",
+	                        "Plan Name": "IA",
+	                        "Age": "13",
+	                        "SINs": "",
+	                        "Paying": "$150.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$3,450.00",
+	                        "CLB": "",
+	                        "Canada Grants": "$640.00",
+	                        "Quebec Grants": "$730.00",
+	                        "Current Value": "$5,013.99",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "New",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Esty",
+	                "D.O.B.": "2015-06-03",
+	                "Plans": [
+	                    {
+	                        "Plan id": "22191852",
+	                        "Plan Name": "CST",
+	                        "Age": "11",
+	                        "SINs": "",
+	                        "Paying": "$150.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$17,028.00",
+	                        "CLB": "$500.00",
+	                        "Canada Grants": "$3,552.00",
+	                        "Quebec Grants": "$1,531.00",
+	                        "Current Value": "$28,818.86",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "1819895631",
+	                        "Plan Name": "IA",
+	                        "Age": "11",
+	                        "SINs": "",
+	                        "Paying": "$150.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$13,792.00",
+	                        "CLB": "$500.00",
+	                        "Canada Grants": "$2,280.29",
+	                        "Quebec Grants": "$905.25",
+	                        "Current Value": "$21,690.29",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": "2026-07-11"
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Zissy",
+	                "D.O.B.": "2017-10-27",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1819895887",
+	                        "Plan Name": "IA",
+	                        "Age": "9",
+	                        "SINs": "",
+	                        "Paying": "$210.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$11,408.58",
+	                        "CLB": "$300.00",
+	                        "Canada Grants": "$2,545.99",
+	                        "Quebec Grants": "$816.42",
+	                        "Current Value": "$17,321.07",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": ""
+	                    },
+	                    {
+	                        "Plan id": "23792027",
+	                        "Plan Name": "CST",
+	                        "Age": "9",
+	                        "SINs": "",
+	                        "Paying": "$210.00",
+	                        "Frequency": "Annual",
+	                        "Principle": "$12,796.00",
+	                        "CLB": "$600.00",
+	                        "Canada Grants": "$2,348.00",
+	                        "Quebec Grants": "$1,151.00",
+	                        "Current Value": "$21,233.16",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Rivky",
+	                "D.O.B.": "2020-02-12",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1820330095",
+	                        "Plan Name": "IA",
+	                        "Age": "6",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$14,600.00",
+	                        "CLB": "$800.00",
+	                        "Canada Grants": "$3,070.00",
+	                        "Quebec Grants": "$1,185.00",
+	                        "Current Value": "$24,644.47",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "TRUE",
+	                        "Date": "2026-09-06"
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Yanky",
+	                "D.O.B.": "2022-09-03",
+	                "Plans": [
+	                    {
+	                        "Plan id": "27243419",
+	                        "Plan Name": "CST",
+	                        "Age": "4",
+	                        "SINs": "",
+	                        "Paying": "$150.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$659.00",
+	                        "CLB": "",
+	                        "Canada Grants": "$810.00",
+	                        "Quebec Grants": "",
+	                        "Current Value": "$3,171.45",
+	                        "Funds": [],
+	                        "Transfered": "CST",
+	                        "Date": ""
+	                    }
+	                ]
+	            },
+	            {
+	                "Name": "Yitty",
+	                "D.O.B.": "2025-01-12",
+	                "Plans": [
+	                    {
+	                        "Plan id": "1824177232",
+	                        "Plan Name": "IA",
+	                        "Age": "1",
+	                        "SINs": "",
+	                        "Paying": "$250.00",
+	                        "Frequency": "Monthly",
+	                        "Principle": "$2,250.00",
+	                        "CLB": "$600.00",
+	                        "Canada Grants": "$450.00",
+	                        "Quebec Grants": "",
+	                        "Current Value": "$3,538.71",
+	                        "Funds": [
+	                            {
+	                                "Fund": "SP500",
+	                                "Percentage": "75%"
+	                            },
+	                            {
+	                                "Fund": "NASDAQ",
+	                                "Percentage": "25%"
+	                            }
+	                        ],
+	                        "Transfered": "",
+	                        "Date": ""
+	                    }
+	                ]
+	            }
+	        ],
+	        "Notes Log": [
+	            {
+	                "Date": "2023-03-23",
+	                "Note": "Mature Zalmen full"
+	            },
+	            {
+	                "Date": "2023-07-05",
+	                "Note": "Opened new plan for rivky"
+	            },
+	            {
+	                "Date": "2024-02-07",
+	                "Note": "Open new plan for Meilech $150- will send SIN"
+	            },
+	            {
+	                "Date": "2024-02-07",
+	                "Note": "Change Esty and Zissy to new payments amounts"
+	            },
+	            {
+	                "Date": "2024-02-07",
+	                "Note": "Change Matis, Meilech and Esty CST to Single deposit paid up plan"
+	            },
+	            {
+	                "Date": "2024-02-07",
+	                "Note": "change Zissy to Check payments"
+	            },
+	            {
+	                "Date": "2024-02-12",
+	                "Note": "opened new plan Meilech no transfer"
+	            },
+	            {
+	                "Date": "2024-11-19",
+	                "Note": "Open a FHSA on Shaindy's name without payments"
+	            },
+	            {
+	                "Date": "2025-02-11",
+	                "Note": "Switched the investmens acording to the age"
+	            },
+	            {
+	                "Date": "2025-02-11",
+	                "Note": "Email sent with a update"
+	            },
+	            {
+	                "Date": "2025-05-01",
+	                "Note": "Opend a new plan for Yitty 250/month"
+	            },
+	            {
+	                "Date": "2025-11-03",
+	                "Note": "Email sent with a update"
+	            },
+	            {
+	                "Date": "2025-11-26",
+	                "Note": "Matured TFSA 20K"
+	            },
+	            {
+	                "Date": "2026-01-19",
+	                "Note": "Sent in maturity form for Shaindy to mature Full ,"
+	            }
+	        ]
+	    }
     {
         "Sheet Name": "Konig Shoul",
         "Primary Client Name": "Shoul Konig",
