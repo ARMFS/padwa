@@ -17,9 +17,10 @@
       </div>
     </div>
     <div class="flex items-center gap-3">
+      <span id="loadStatus" class="text-xs font-mono bg-indigo-800 text-indigo-200 px-3 py-1 rounded-md">Checking for padwa.json...</span>
       <label class="cursor-pointer bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg shadow-sm transition flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-        Upload Master JSON File
+        Manual Upload
         <input type="file" id="jsonFileInput" accept=".json" class="hidden">
       </label>
     </div>
@@ -40,8 +41,7 @@
       
       <div id="clientList" class="flex-1 overflow-y-auto divide-y divide-gray-100">
         <div class="p-8 text-center text-gray-400 text-sm">
-          <p class="font-medium mb-1">Waiting for data</p>
-          <p class="text-xs text-gray-400">Upload your compiled JSON database to begin scanning logs.</p>
+          <p class="font-medium mb-1">Loading Data...</p>
         </div>
       </div>
     </aside>
@@ -50,7 +50,7 @@
       <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 max-w-md mx-auto">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
         <h3 class="text-lg font-semibold text-gray-600 mb-1">No Profile Selected</h3>
-        <p class="text-sm">Please upload a valid JSON output payload and select a customer sheet row entry from the directory menu tab to parse.</p>
+        <p class="text-sm">Please select a customer from the sidebar menu tab to inspect their structural portfolios.</p>
       </div>
     </main>
 
@@ -66,8 +66,38 @@
     const clientList = document.getElementById('clientList');
     const dossierContent = document.getElementById('dossierContent');
     const recordCount = document.getElementById('recordCount');
+    const loadStatus = document.getElementById('loadStatus');
 
-    // Load and Parse uploaded standard schema JSON outputs
+    // NEW: Automatically attempt to fetch padwa.json from the same directory on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('padwa.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Could not locate padwa.json automatically (Status: ${response.status})`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          database = data;
+          filteredDatabase = [...database];
+          activeIndex = database.length > 0 ? 0 : -1;
+          loadStatus.textContent = "Source: padwa.json (Auto)";
+          loadStatus.className = "text-xs font-mono bg-emerald-800 text-emerald-200 px-3 py-1 rounded-md";
+          updateUI();
+        })
+        .catch(err => {
+          console.log(err.message);
+          loadStatus.textContent = "padwa.json not found. Use Manual Upload.";
+          loadStatus.className = "text-xs font-mono bg-amber-800 text-amber-200 px-3 py-1 rounded-md";
+          clientList.innerHTML = `
+            <div class="p-8 text-center text-gray-400 text-sm">
+              <p class="font-medium mb-1">padwa.json not detected</p>
+              <p class="text-xs text-gray-400">Please use the Manual Upload button to choose your file.</p>
+            </div>`;
+        });
+    });
+
+    // Manual upload option (backup)
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -78,7 +108,8 @@
           database = JSON.parse(event.target.result);
           filteredDatabase = [...database];
           activeIndex = database.length > 0 ? 0 : -1;
-          
+          loadStatus.textContent = `Source: ${file.name} (Manual)`;
+          loadStatus.className = "text-xs font-mono bg-blue-800 text-blue-200 px-3 py-1 rounded-md";
           updateUI();
         } catch (err) {
           alert("Error parsing JSON file. Please ensure it is correctly formatted output data.");
@@ -88,7 +119,7 @@
       reader.readAsText(file);
     });
 
-    // Integrated Instant Query Regex filter search box configuration block 
+    // Integrated Instant Query filter search box configuration block 
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
       if (!query) {
@@ -115,7 +146,6 @@
       renderActiveDossier();
     }
 
-    // Render interactive sidebar array components loop 
     function renderDirectoryList() {
       if (filteredDatabase.length === 0) {
         clientList.innerHTML = `<div class="p-6 text-center text-xs text-gray-400 font-medium">No matching families located</div>`;
@@ -153,7 +183,6 @@
       });
     }
 
-    // Comprehensive detail grid structural rendering compiler engines
     function renderActiveDossier() {
       if (activeIndex === -1 || !filteredDatabase[activeIndex]) {
         dossierContent.innerHTML = `
@@ -165,7 +194,6 @@
 
       const client = filteredDatabase[activeIndex];
 
-      // Format Funds Array to text badges safely loop block
       const renderFundsBadge = (funds) => {
         if (!funds || funds.length === 0) return `<span class="text-xs text-gray-400 italic">None</span>`;
         return funds.map(f => `
@@ -175,7 +203,6 @@
         `).join(' ');
       };
 
-      // Construct view DOM markup templates dynamically block injection loop array mapping
       let html = `
         <div class="bg-white rounded-xl shadow-xs border border-gray-200 p-6 mb-6">
           <div class="flex flex-wrap justify-between items-start gap-4">
@@ -212,7 +239,6 @@
       if (!client.Children || client.Children.length === 0) {
         html += `<div class="bg-white rounded-xl shadow-xs border border-gray-200 p-8 text-center text-sm italic text-gray-400">No child records parsed from active account matrix blocks rows.</div>`;
       } else {
-        // Iterate over child matrices
         client.Children.forEach((child) => {
           html += `
             <div class="bg-white rounded-xl shadow-xs border border-gray-200 overflow-hidden mb-6">
@@ -243,7 +269,7 @@
                       <th class="px-4 py-2 text-indigo-900 bg-indigo-50/40">Current Value</th>
                       <th class="px-4 py-2">Asset Funds Mix</th>
                       <th class="px-4 py-2">Transfered</th>
-                      <th class="px-4 py-2">Date Header</th>
+                      <th class="px-4 py-2">Date</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 font-medium text-gray-700 divide-x divide-gray-100">
@@ -253,11 +279,8 @@
             html += `<tr><td colspan="13" class="px-6 py-4 text-center italic text-gray-400 bg-gray-50/30">No explicit plan records populated for this profile array block.</td></tr>`;
           } else {
             child.Plans.forEach((plan) => {
-              // Highlight validations dynamically matching validation patterns context matrix indicators
-              const hasMixedAlphaRuleAlert = parseInt(plan.Age) > 17 && Object.values(plan).some(v => typeof v === 'string' && /[a-zA-Z]/.test(v) && /\d/.test(v) && !v.includes('$') && v !== plan["Plan id"]);
-              
               html += `
-                <tr class="hover:bg-gray-50/60 transition ${hasMixedAlphaRuleAlert ? 'bg-amber-50/40' : ''}">
+                <tr class="hover:bg-gray-50/60 transition">
                   <td class="px-4 py-2.5 font-bold text-gray-900">
                     <div class="flex flex-col">
                       <span class="text-xs tracking-tight font-mono font-bold">${plan["Plan id"] || '—'}</span>
@@ -290,7 +313,6 @@
         });
       }
 
-      // Append clean historical timeline logs below accounts portfolios matrices checks validation boxes
       html += `
         <h3 class="text-lg font-bold text-gray-900 mt-8 mb-4 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
