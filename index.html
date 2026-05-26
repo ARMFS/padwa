@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Sorted Default)</title>
+  <title>Master Client Database Viewer (True Last Name Sort)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -104,7 +104,6 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
-    // Sort State Controllers (CHANGED: Default configured to Primary Client Name / A-Z)
     let currentSortField = 'Primary Client Name'; 
     let currentSortOrder = 'ASC';                
 
@@ -190,6 +189,31 @@
       applyFilteringAndSorting(false);
     }
 
+    // Text converter algorithm block parsing "Firstname Lastname" to "Lastname, Firstname" format
+    function convertToLastFirst(fullName) {
+      if (!fullName || String(fullName).trim() === "") return "Unnamed Client";
+      let cleanName = String(fullName).trim();
+      
+      if (cleanName.includes(',')) return cleanName;
+      
+      let nameParts = cleanName.split(/\s+/);
+      if (nameParts.length <= 1) return cleanName;
+      
+      let lastName = nameParts.pop();
+      let firstNames = nameParts.join(" ");
+      return `${lastName}, ${firstNames}`;
+    }
+
+    // NEW: Isolated sorting key engine to fix the first name layout sorting mismatch bug
+    function getSortKey(item) {
+      if (currentSortField === 'Sheet Name') {
+        return String(item["Sheet Name"] || "").toLowerCase().trim();
+      } else {
+        let rawName = item["Primary Client Name"] || "";
+        return convertToLastFirst(rawName).toLowerCase().trim();
+      }
+    }
+
     function applyFilteringAndSorting(resetActiveIndex = false) {
       let query = searchInput.value.toLowerCase().trim();
       let currentlySelectedSheet = (activeIndex !== -1 && filteredDatabase[activeIndex]) ? filteredDatabase[activeIndex]["Sheet Name"] : null;
@@ -210,15 +234,16 @@
         });
       }
 
+      // FIXED: Uses pre-computed sort keys to force accurate Last Name alphabetical grouping bounds
       filteredDatabase.sort((a, b) => {
-        let valA = String(a[currentSortField] || "").toLowerCase().trim();
-        let valB = String(b[currentSortField] || "").toLowerCase().trim();
+        let keyA = getSortKey(a);
+        let keyB = getSortKey(b);
         
-        if (!valA) valA = "zzz";
-        if (!valB) valB = "zzz";
+        if (keyA === "unnamed client" || keyA === "") keyA = "zzz";
+        if (keyB === "unnamed client" || keyB === "") keyB = "zzz";
 
-        if (valA < valB) return currentSortOrder === 'ASC' ? -1 : 1;
-        if (valA > valB) return currentSortOrder === 'ASC' ? 1 : -1;
+        if (keyA < keyB) return currentSortOrder === 'ASC' ? -1 : 1;
+        if (keyA > keyB) return currentSortOrder === 'ASC' ? 1 : -1;
         return 0;
       });
 
@@ -230,22 +255,6 @@
       }
 
       updateUI();
-    }
-
-    // NEW: Text converter algorithm block parsing "Firstname Lastname" to "Lastname, Firstname" format
-    function convertToLastFirst(fullName) {
-      if (!fullName || String(fullName).trim() === "") return "Unnamed Client";
-      let cleanName = String(fullName).trim();
-      
-      // If it already contains a comma separator, treat it as already formatted
-      if (cleanName.includes(',')) return cleanName;
-      
-      let nameParts = cleanName.split(/\s+/);
-      if (nameParts.length <= 1) return cleanName;
-      
-      let lastName = nameParts.pop();
-      let firstNames = nameParts.join(" ");
-      return `${lastName}, ${firstNames}`;
     }
 
     function updateUI() {
@@ -268,7 +277,6 @@
         const div = document.createElement('div');
         div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-emerald-50/60 border-emerald-500 shadow-sm' : 'border-transparent hover:bg-gray-50'}`;
         
-        // Formats Primary Name explicitly to "Lastname, Firstname" for clear sorting directories
         const clientNameFormatted = convertToLastFirst(item["Primary Client Name"]);
         const sheetNameFormatted = item["Sheet Name"] || 'Unnamed Sheet';
 
