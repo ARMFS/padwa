@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (True Last Name Sort)</title>
+  <title>Master Client Database Viewer (Secure & Discrete)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -12,16 +12,16 @@
     <div class="flex items-center space-x-3">
       <div class="bg-white text-emerald-600 font-black px-3 py-1.5 rounded-lg shadow text-xl tracking-tight">DB</div>
       <div>
-        <h1 class="text-xl font-bold leading-tight tracking-tight">Client Integrity Dashboard</h1>
+        <h1 class="text-xl font-bold leading-tight tracking-tight">Padwa Client Dashboard</h1>
         <p class="text-xs text-emerald-100">Private Database Matrix Workspace — Search, Filter, Sort & Inline Edit Enabled</p>
       </div>
     </div>
     <div class="flex items-center gap-3">
       <span id="loadStatus" class="text-xs font-mono bg-emerald-700 text-emerald-100 px-3 py-1 rounded-md">Checking for padwa.json...</span>
       
-      <button id="exportBtn" onclick="exportUpdatedJSON()" class="hidden bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold px-4 py-2.5 rounded-lg shadow-sm transition flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-        Export Updated JSON
+      <button id="exportBtn" onclick="exportUpdatedJSON()" class="hidden bg-emerald-700/40 hover:bg-emerald-700/60 border border-emerald-500 text-emerald-100 hover:text-white text-sm font-semibold px-4 py-2.5 rounded-lg shadow-2xs transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        Export JSON
       </button>
 
       <label class="cursor-pointer bg-white hover:bg-gray-100 active:bg-gray-200 text-emerald-700 text-sm font-bold px-4 py-2.5 rounded-lg shadow-sm transition flex items-center gap-2">
@@ -104,6 +104,7 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
+    // Sort State Controllers
     let currentSortField = 'Primary Client Name'; 
     let currentSortOrder = 'ASC';                
 
@@ -204,7 +205,7 @@
       return `${lastName}, ${firstNames}`;
     }
 
-    // NEW: Isolated sorting key engine to fix the first name layout sorting mismatch bug
+    // Isolated true sorting key engine to fix the first name layout sorting mismatch bug
     function getSortKey(item) {
       if (currentSortField === 'Sheet Name') {
         return String(item["Sheet Name"] || "").toLowerCase().trim();
@@ -234,7 +235,7 @@
         });
       }
 
-      // FIXED: Uses pre-computed sort keys to force accurate Last Name alphabetical grouping bounds
+      // Employs pre-computed sort keys to force accurate Last Name alphabetical grouping bounds
       filteredDatabase.sort((a, b) => {
         let keyA = getSortKey(a);
         let keyB = getSortKey(b);
