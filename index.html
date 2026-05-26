@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Fixed Alignment)</title>
+  <title>Master Client Database Viewer (Sorted Default)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -48,8 +48,8 @@
           <div class="flex items-center gap-1">
             <span class="text-gray-400 font-bold uppercase tracking-wider text-[10px]">Sort:</span>
             <select id="sortBySelect" onchange="toggleSortingCriteria()" class="bg-gray-100 border border-gray-300 rounded px-1.5 py-1 text-gray-700 font-medium focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer">
-              <option value="Sheet Name" selected>By Sheet Name</option>
-              <option value="Primary Client Name">By Client Name</option>
+              <option value="Primary Client Name" selected>By Client Name</option>
+              <option value="Sheet Name">By Sheet Name</option>
             </select>
           </div>
           
@@ -104,8 +104,8 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
-    // Sort State Controllers (Configured to Sheet Name / A-Z as Default)
-    let currentSortField = 'Sheet Name'; 
+    // Sort State Controllers (CHANGED: Default configured to Primary Client Name / A-Z)
+    let currentSortField = 'Primary Client Name'; 
     let currentSortOrder = 'ASC';                
 
     const fileInput = document.getElementById('jsonFileInput');
@@ -232,6 +232,22 @@
       updateUI();
     }
 
+    // NEW: Text converter algorithm block parsing "Firstname Lastname" to "Lastname, Firstname" format
+    function convertToLastFirst(fullName) {
+      if (!fullName || String(fullName).trim() === "") return "Unnamed Client";
+      let cleanName = String(fullName).trim();
+      
+      // If it already contains a comma separator, treat it as already formatted
+      if (cleanName.includes(',')) return cleanName;
+      
+      let nameParts = cleanName.split(/\s+/);
+      if (nameParts.length <= 1) return cleanName;
+      
+      let lastName = nameParts.pop();
+      let firstNames = nameParts.join(" ");
+      return `${lastName}, ${firstNames}`;
+    }
+
     function updateUI() {
       renderDirectoryList();
       renderActiveDossier();
@@ -252,9 +268,12 @@
         const div = document.createElement('div');
         div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-emerald-50/60 border-emerald-500 shadow-sm' : 'border-transparent hover:bg-gray-50'}`;
         
-        // Ensure falling back safely instead of writing an absolute blank field empty line
-        const mainTitleText = currentSortField === 'Sheet Name' ? (item["Sheet Name"] || 'Unnamed Sheet') : (item["Primary Client Name"] || 'Unnamed Client');
-        const secondaryTitleText = currentSortField === 'Sheet Name' ? (item["Primary Client Name"] || 'Unnamed Client') : (item["Sheet Name"] || 'N/A');
+        // Formats Primary Name explicitly to "Lastname, Firstname" for clear sorting directories
+        const clientNameFormatted = convertToLastFirst(item["Primary Client Name"]);
+        const sheetNameFormatted = item["Sheet Name"] || 'Unnamed Sheet';
+
+        const mainTitleText = currentSortField === 'Sheet Name' ? sheetNameFormatted : clientNameFormatted;
+        const secondaryTitleText = currentSortField === 'Sheet Name' ? clientNameFormatted : sheetNameFormatted;
 
         div.innerHTML = `
           <div class="flex items-center justify-between mb-0.5">
@@ -278,7 +297,6 @@
       });
     }
 
-    // FIXED: syncEdit has been separated from instant layout resets to preserve text memory variables safely
     function syncEdit(element, type, field, childIndex = null, planIndex = null, logIndex = null) {
       let currentClient = filteredDatabase[activeIndex];
       let originalIndex = database.findIndex(f => f["Sheet Name"] === currentClient["Sheet Name"]);
@@ -305,13 +323,12 @@
         }
       }
       
-      // FIXED: Sidebar text values list matches are immediately updated locally without full execution shifts
       const directoryDivs = clientList.querySelectorAll('div[class*="cursor-pointer"]');
       if (directoryDivs[activeIndex]) {
         const titleSpan = directoryDivs[activeIndex].querySelector('span[class*="font-bold"]');
         if (titleSpan && (field === 'Primary Client Name' || field === 'Sheet Name')) {
           if (currentSortField === field) {
-            titleSpan.innerText = targetValue || "Unnamed Record";
+            titleSpan.innerText = field === 'Primary Client Name' ? convertToLastFirst(targetValue) : targetValue;
           }
         }
       }
