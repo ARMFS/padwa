@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Client Database Viewer (Sorted Default)</title>
+  <title>Master Client Database Viewer (Fixed Alignment)</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
@@ -104,7 +104,7 @@
     let filteredDatabase = [];
     let activeIndex = -1;
     
-    // Sort State Controllers (Default configured to Sheet Name / A-Z)
+    // Sort State Controllers (Configured to Sheet Name / A-Z as Default)
     let currentSortField = 'Sheet Name'; 
     let currentSortOrder = 'ASC';                
 
@@ -120,7 +120,7 @@
     const sortAscBtn = document.getElementById('sortAscBtn');
     const sortDescBtn = document.getElementById('sortDescBtn');
 
-    // Automatically attempt to fetch padwa.json from the same directory on startup
+    // Fetch padwa.json automatically on startup
     window.addEventListener('DOMContentLoaded', () => {
       fetch('padwa.json')
         .then(response => {
@@ -252,6 +252,7 @@
         const div = document.createElement('div');
         div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-emerald-50/60 border-emerald-500 shadow-sm' : 'border-transparent hover:bg-gray-50'}`;
         
+        // Ensure falling back safely instead of writing an absolute blank field empty line
         const mainTitleText = currentSortField === 'Sheet Name' ? (item["Sheet Name"] || 'Unnamed Sheet') : (item["Primary Client Name"] || 'Unnamed Client');
         const secondaryTitleText = currentSortField === 'Sheet Name' ? (item["Primary Client Name"] || 'Unnamed Client') : (item["Sheet Name"] || 'N/A');
 
@@ -277,6 +278,7 @@
       });
     }
 
+    // FIXED: syncEdit has been separated from instant layout resets to preserve text memory variables safely
     function syncEdit(element, type, field, childIndex = null, planIndex = null, logIndex = null) {
       let currentClient = filteredDatabase[activeIndex];
       let originalIndex = database.findIndex(f => f["Sheet Name"] === currentClient["Sheet Name"]);
@@ -303,8 +305,15 @@
         }
       }
       
-      if (field === 'Primary Client Name' || field === 'Additional Name' || field === 'Sheet Name') {
-        applyFilteringAndSorting(false);
+      // FIXED: Sidebar text values list matches are immediately updated locally without full execution shifts
+      const directoryDivs = clientList.querySelectorAll('div[class*="cursor-pointer"]');
+      if (directoryDivs[activeIndex]) {
+        const titleSpan = directoryDivs[activeIndex].querySelector('span[class*="font-bold"]');
+        if (titleSpan && (field === 'Primary Client Name' || field === 'Sheet Name')) {
+          if (currentSortField === field) {
+            titleSpan.innerText = targetValue || "Unnamed Record";
+          }
+        }
       }
     }
 
