@@ -6,19 +6,19 @@
   <title>Master Client Database Viewer</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-purple-950 font-sans text-emerald-400 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-purple-900">
+<body class="bg-gray-50 font-sans text-gray-800 antialiased h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
 
-  <header class="bg-purple-900 text-emerald-400 shadow-xl border-b border-purple-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-10">
+  <header class="bg-emerald-600 text-white shadow-md px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-10">
     <div class="flex items-center space-x-3">
-      <div class="bg-emerald-500 text-purple-950 font-black px-3 py-1.5 rounded-lg shadow-lg text-xl tracking-tight">DB</div>
+      <div class="bg-white text-emerald-600 font-black px-3 py-1.5 rounded-lg shadow text-xl tracking-tight">DB</div>
       <div>
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-white">Client Integrity Dashboard</h1>
-        <p class="text-xs text-purple-300">Inspect nested records, validation rules, and script formatting</p>
+        <h1 class="text-xl font-bold leading-tight tracking-tight">Client Integrity Dashboard</h1>
+        <p class="text-xs text-emerald-100">Inspect nested records, validation rules, and script formatting</p>
       </div>
     </div>
     <div class="flex items-center gap-3">
-      <span id="loadStatus" class="text-xs font-mono bg-purple-950 border border-purple-700 text-emerald-300 px-3 py-1 rounded-md">Checking for padwa.json...</span>
-      <label class="cursor-pointer bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-purple-950 text-sm font-bold px-4 py-2.5 rounded-lg shadow-md transition flex items-center gap-2">
+      <span id="loadStatus" class="text-xs font-mono bg-emerald-700 text-emerald-100 px-3 py-1 rounded-md">Checking for padwa.json...</span>
+      <label class="cursor-pointer bg-white hover:bg-gray-100 active:bg-gray-200 text-emerald-700 text-sm font-bold px-4 py-2.5 rounded-lg shadow-sm transition flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
         Manual Upload
         <input type="file" id="jsonFileInput" accept=".json" class="hidden">
@@ -28,29 +28,29 @@
 
   <div class="flex-1 flex overflow-hidden">
     
-    <aside class="w-80 bg-purple-900 border-r border-purple-800 flex flex-col shadow-lg">
-      <div class="p-4 border-b border-purple-800 bg-purple-950/40">
+    <aside class="w-80 bg-white border-r border-gray-200 flex flex-col shadow-sm">
+      <div class="p-4 border-b border-gray-100 bg-gray-50/50">
         <div class="relative">
-          <input type="text" id="searchInput" placeholder="Search family or child name..." class="w-full pl-9 pr-4 py-2 text-sm bg-purple-950 border border-purple-700 rounded-lg text-emerald-300 placeholder-purple-400 font-medium shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-purple-400">
+          <input type="text" id="searchInput" placeholder="Search family or child name..." class="w-full pl-9 pr-4 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </div>
         </div>
-        <div id="recordCount" class="text-xs text-purple-300 mt-2 font-mono font-semibold">No file loaded</div>
+        <div id="recordCount" class="text-xs text-gray-500 mt-2 font-medium">No file loaded</div>
       </div>
       
-      <div id="clientList" class="flex-1 overflow-y-auto divide-y divide-purple-800/60">
-        <div class="p-8 text-center text-purple-400 text-sm">
-          <p class="font-semibold mb-1 text-purple-300">Loading Data Matrix...</p>
+      <div id="clientList" class="flex-1 overflow-y-auto divide-y divide-gray-100">
+        <div class="p-8 text-center text-gray-400 text-sm">
+          <p class="font-medium mb-1">Loading Data...</p>
         </div>
       </div>
     </aside>
 
-    <main id="dossierContent" class="flex-1 bg-purple-950 overflow-y-auto p-6 relative">
-      <div class="h-full flex flex-col items-center justify-center text-center text-purple-400 max-w-md mx-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-purple-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-        <h3 class="text-lg font-bold text-purple-300 mb-1">No Profile Selected</h3>
-        <p class="text-xs text-purple-400">Please select a customer from the sidebar menu tab to inspect their structural portfolios.</p>
+    <main id="dossierContent" class="flex-1 bg-gray-50 overflow-y-auto p-6 relative">
+      <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 max-w-md mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        <h3 class="text-lg font-semibold text-gray-600 mb-1">No Profile Selected</h3>
+        <p class="text-sm">Please select a customer from the sidebar menu tab to inspect their structural portfolios.</p>
       </div>
     </main>
 
@@ -82,17 +82,17 @@
           filteredDatabase = [...database];
           activeIndex = database.length > 0 ? 0 : -1;
           loadStatus.textContent = "Source: padwa.json (Auto)";
-          loadStatus.className = "text-xs font-mono bg-emerald-500 text-purple-950 font-bold px-3 py-1 rounded-md";
+          loadStatus.className = "text-xs font-mono bg-emerald-700 text-emerald-100 px-3 py-1 rounded-md";
           updateUI();
         })
         .catch(err => {
           console.log(err.message);
-          loadStatus.textContent = "padwa.json not found. Use Upload.";
-          loadStatus.className = "text-xs font-mono bg-amber-500 text-purple-950 font-bold px-3 py-1 rounded-md";
+          loadStatus.textContent = "padwa.json not found. Use Manual Upload.";
+          loadStatus.className = "text-xs font-mono bg-amber-600 text-white px-3 py-1 rounded-md";
           clientList.innerHTML = `
-            <div class="p-8 text-center text-purple-400 text-sm">
-              <p class="font-bold text-purple-300 mb-1">padwa.json not detected</p>
-              <p class="text-xs text-purple-400">Please use the Manual Upload button to choose your file.</p>
+            <div class="p-8 text-center text-gray-400 text-sm">
+              <p class="font-medium mb-1">padwa.json not detected</p>
+              <p class="text-xs text-gray-400">Please use the Manual Upload button to choose your file.</p>
             </div>`;
         });
     });
@@ -109,7 +109,7 @@
           filteredDatabase = [...database];
           activeIndex = database.length > 0 ? 0 : -1;
           loadStatus.textContent = `Source: ${file.name} (Manual)`;
-          loadStatus.className = "text-xs font-mono bg-emerald-500 text-purple-950 font-bold px-3 py-1 rounded-md";
+          loadStatus.className = "text-xs font-mono bg-emerald-700 text-emerald-100 px-3 py-1 rounded-md";
           updateUI();
         } catch (err) {
           alert("Error parsing JSON file. Please ensure it is correctly formatted output data.");
@@ -148,7 +148,7 @@
 
     function renderDirectoryList() {
       if (filteredDatabase.length === 0) {
-        clientList.innerHTML = `<div class="p-6 text-center text-xs text-purple-400 font-medium">No matching families located</div>`;
+        clientList.innerHTML = `<div class="p-6 text-center text-xs text-gray-400 font-medium">No matching families located</div>`;
         recordCount.textContent = `Found 0 matching profiles`;
         return;
       }
@@ -159,17 +159,17 @@
       filteredDatabase.forEach((item, index) => {
         const isActive = index === activeIndex;
         const div = document.createElement('div');
-        div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-purple-950/60 border-emerald-400 shadow-md' : 'border-transparent hover:bg-purple-800/40'}`;
+        div.className = `p-4 cursor-pointer border-l-4 transition flex flex-col text-left ${isActive ? 'bg-emerald-50/60 border-emerald-500 shadow-sm' : 'border-transparent hover:bg-gray-50'}`;
         
         div.innerHTML = `
           <div class="flex items-center justify-between mb-0.5">
-            <span class="font-bold text-sm ${isActive ? 'text-white' : 'text-emerald-400'}">${item["Primary Client Name"] || 'Unnamed Client'}</span>
-            <span class="text-[10px] bg-purple-950 text-emerald-300 border border-purple-700 px-1.5 py-0.5 rounded font-mono font-bold">${item["Children"] ? item["Children"].length : 0} C</span>
+            <span class="font-semibold text-sm ${isActive ? 'text-emerald-900' : 'text-gray-900'}">${item["Primary Client Name"] || 'Unnamed Client'}</span>
+            <span class="text-[10px] bg-gray-200/80 text-gray-600 px-1.5 py-0.5 rounded font-mono font-bold">${item["Children"] ? item["Children"].length : 0} C</span>
           </div>
-          ${item["Additional Name"] ? `<span class="text-xs text-purple-300 italic -mt-0.5 mb-1">${item["Additional Name"]}</span>` : ''}
-          <div class="flex justify-between items-center text-[11px] text-purple-400 mt-1 font-mono">
-            <span class="truncate font-medium max-w-[140px] text-purple-300"><span class="font-bold text-emerald-500/80">Tab:</span> ${item["Sheet Name"] || 'N/A'}</span>
-            <span class="text-[10px]">${item["Last Updated"] || 'No Date'}</span>
+          ${item["Additional Name"] ? `<span class="text-xs text-gray-500 italic -mt-0.5 mb-1">${item["Additional Name"]}</span>` : ''}
+          <div class="flex justify-between items-center text-[11px] text-gray-400 mt-1">
+            <span class="truncate font-medium max-w-[140px]"><span class="font-bold text-gray-500">Sheet:</span> ${item["Sheet Name"] || 'N/A'}</span>
+            <span class="font-mono text-[10px]">${item["Last Updated"] || 'No Date'}</span>
           </div>
         `;
 
@@ -186,8 +186,8 @@
     function renderActiveDossier() {
       if (activeIndex === -1 || !filteredDatabase[activeIndex]) {
         dossierContent.innerHTML = `
-          <div class="h-full flex flex-col items-center justify-center text-center text-purple-400 max-w-sm mx-auto">
-            <h3 class="text-md font-semibold text-purple-300">No profile selected</h3>
+          <div class="h-full flex flex-col items-center justify-center text-center text-gray-400 max-w-sm mx-auto">
+            <h3 class="text-md font-semibold text-gray-500">No profile selected</h3>
           </div>`;
         return;
       }
@@ -195,110 +195,110 @@
       const client = filteredDatabase[activeIndex];
 
       const renderFundsBadge = (funds) => {
-        if (!funds || funds.length === 0) return `<span class="text-xs text-purple-400 italic">None</span>`;
+        if (!funds || funds.length === 0) return `<span class="text-xs text-gray-400 italic">None</span>`;
         return funds.map(f => `
-          <span class="inline-flex items-center bg-purple-950 border border-purple-700 text-emerald-300 font-bold font-mono text-[11px] px-2 py-0.5 rounded-md shadow-inner">
+          <span class="inline-flex items-center bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold font-mono text-[11px] px-2 py-0.5 rounded-md shadow-2xs">
             ${f.Percentage} ${f.Fund}
           </span>
         `).join(' ');
       };
 
       let html = `
-        <div class="bg-purple-900 rounded-xl shadow-xl border border-purple-800 p-6 mb-6">
+        <div class="bg-white rounded-xl shadow-xs border border-gray-200 p-6 mb-6">
           <div class="flex flex-wrap justify-between items-start gap-4">
             <div>
               <div class="flex items-center space-x-2.5">
-                <h2 class="text-2xl font-black tracking-tight text-white">${client["Primary Client Name"] || 'N/A'}</h2>
-                <span class="text-xs bg-emerald-500 text-purple-950 font-black px-2 py-0.5 rounded-full font-mono">${client["Sheet Name"] || 'Tab Row'}</span>
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">${client["Primary Client Name"] || 'N/A'}</h2>
+                <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200 font-mono">${client["Sheet Name"] || 'Tab Row'}</span>
               </div>
-              ${client["Additional Name"] ? `<p class="text-md font-medium text-purple-300 italic mt-0.5">Spouse/Secondary: ${client["Additional Name"]}</p>` : ''}
-              <p class="text-xs text-purple-400 mt-2 font-mono"><span class="font-bold uppercase tracking-wider text-[10px] text-emerald-400">Database Stamp:</span> ${client["Last Updated"] || 'Missing File Date Header'}</p>
+              ${client["Additional Name"] ? `<p class="text-md font-medium text-gray-500 italic mt-0.5">Spouse/Secondary: ${client["Additional Name"]}</p>` : ''}
+              <p class="text-xs text-gray-400 mt-2 font-mono"><span class="font-bold uppercase tracking-wider text-[10px] text-gray-500">Database Stamp:</span> ${client["Last Updated"] || 'Missing File Date Header'}</p>
             </div>
             
-            <div class="bg-purple-950 border border-purple-800 rounded-xl p-4 min-w-[280px] grid grid-cols-1 gap-2.5 shadow-inner">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 border-b border-purple-800 pb-1 flex items-center gap-1.5">
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 min-w-[280px] grid grid-cols-1 gap-2.5 shadow-2xs">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 border-b border-gray-200 pb-1 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Contact Details
               </h4>
-              <div class="text-xs font-mono">
-                <div class="flex py-0.5"><span class="w-20 font-bold text-purple-400">Phone:</span> <span class="text-white font-bold">${client["Contact Information"]?.["Phone"] || '—'}</span></div>
-                <div class="flex py-0.5"><span class="w-20 font-bold text-purple-400">Phone 2:</span> <span class="text-purple-300">${client["Contact Information"]?.["Phone (other)"] || '—'}</span></div>
-                <div class="flex py-0.5 truncate max-w-sm"><span class="w-20 font-bold text-purple-400">Email:</span> <span class="font-bold text-emerald-400 lowercase">${client["Contact Information"]?.["Email"] || '—'}</span></div>
-                <div class="flex py-0.5 truncate max-w-sm"><span class="w-20 font-bold text-purple-400">Email 2:</span> <span class="text-emerald-500/80 lowercase">${client["Contact Information"]?.["Email (other)"] || '—'}</span></div>
+              <div class="text-xs">
+                <div class="flex py-0.5"><span class="w-20 font-bold text-gray-500">Phone:</span> <span class="font-mono text-gray-900 font-semibold">${client["Contact Information"]?.["Phone"] || '—'}</span></div>
+                <div class="flex py-0.5"><span class="w-20 font-bold text-gray-500">Phone 2:</span> <span class="font-mono text-gray-700">${client["Contact Information"]?.["Phone (other)"] || '—'}</span></div>
+                <div class="flex py-0.5 truncate max-w-sm"><span class="w-20 font-bold text-gray-500">Email:</span> <span class="font-medium text-emerald-600 lowercase">${client["Contact Information"]?.["Email"] || '—'}</span></div>
+                <div class="flex py-0.5 truncate max-w-sm"><span class="w-20 font-bold text-gray-500">Email 2:</span> <span class="font-medium text-emerald-500/80 lowercase">${client["Contact Information"]?.["Email (other)"] || '—'}</span></div>
               </div>
             </div>
           </div>
         </div>
 
-        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
           Beneficiaries & Account Portfolios (${client.Children ? client.Children.length : 0})
         </h3>
       `;
 
       if (!client.Children || client.Children.length === 0) {
-        html += `<div class="bg-purple-900 rounded-xl shadow-xl border border-purple-800 p-8 text-center text-sm italic text-purple-400">No child records parsed from active account matrix blocks rows.</div>`;
+        html += `<div class="bg-white rounded-xl shadow-xs border border-gray-200 p-8 text-center text-sm italic text-gray-400">No child records parsed from active account matrix blocks rows.</div>`;
       } else {
         client.Children.forEach((child) => {
           html += `
-            <div class="bg-purple-900 rounded-xl shadow-xl border border-purple-800 overflow-hidden mb-6">
-              <div class="bg-purple-950/40 border-b border-purple-800 px-6 py-3 flex flex-wrap items-center justify-between gap-2">
+            <div class="bg-white rounded-xl shadow-xs border border-gray-200 overflow-hidden mb-6">
+              <div class="bg-gray-50/80 border-b border-gray-200 px-6 py-3 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center space-x-3">
-                  <span class="text-md font-black text-white">${child.Name || 'Unnamed Child'}</span>
-                  <span class="h-1.5 w-1.5 bg-purple-700 rounded-full"></span>
-                  <span class="text-xs text-purple-300 font-mono font-semibold"><span class="font-bold text-emerald-400 uppercase tracking-wide text-[10px]">D.O.B:</span> ${child["D.O.B."] || 'Missing'}</span>
+                  <span class="text-md font-bold text-emerald-950">${child.Name || 'Unnamed Child'}</span>
+                  <span class="h-1.5 w-1.5 bg-gray-300 rounded-full"></span>
+                  <span class="text-xs text-gray-500 font-medium"><span class="font-bold text-gray-400 uppercase tracking-wide text-[10px]">D.O.B:</span> ${child["D.O.B."] || 'Missing'}</span>
                 </div>
-                <div class="text-xs font-mono font-bold bg-purple-950 text-emerald-400 px-2.5 py-0.5 rounded border border-purple-700 shadow-inner">
+                <div class="text-xs font-mono font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded border border-emerald-100 shadow-2xs">
                   Portfolio Count: ${child.Plans ? child.Plans.length : 0}
                 </div>
               </div>
 
               <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs whitespace-nowrap divide-y divide-purple-800/60">
-                  <thead class="bg-purple-950/30 font-bold text-emerald-400 uppercase tracking-wider text-[10px] font-mono border-b border-purple-800">
+                <table class="w-full text-left text-xs whitespace-nowrap divide-y divide-gray-200">
+                  <thead class="bg-gray-100/60 font-bold text-gray-500 uppercase tracking-wider text-[10px] divide-x divide-gray-200">
                     <tr>
-                      <th class="px-4 py-3">Plan Details</th>
-                      <th class="px-4 py-3">Age</th>
-                      <th class="px-4 py-3">SIN Status</th>
-                      <th class="px-4 py-3">Paying Cont.</th>
-                      <th class="px-4 py-3">Frequency</th>
-                      <th class="px-4 py-3">Principle</th>
-                      <th class="px-4 py-3">CLB</th>
-                      <th class="px-4 py-3">Can. Grants</th>
-                      <th class="px-4 py-3">Que. Grants</th>
-                      <th class="px-4 py-3 text-white bg-purple-950/50">Current Value</th>
-                      <th class="px-4 py-3">Asset Funds Mix</th>
-                      <th class="px-4 py-3">Transfered</th>
-                      <th class="px-4 py-3">Date</th>
+                      <th class="px-4 py-2">Plan Details</th>
+                      <th class="px-4 py-2">Age</th>
+                      <th class="px-4 py-2">SIN Status</th>
+                      <th class="px-4 py-2">Paying Cont.</th>
+                      <th class="px-4 py-2">Frequency</th>
+                      <th class="px-4 py-2">Principle</th>
+                      <th class="px-4 py-2">CLB</th>
+                      <th class="px-4 py-2">Can. Grants</th>
+                      <th class="px-4 py-2">Que. Grants</th>
+                      <th class="px-4 py-2 text-emerald-900 bg-emerald-50/40">Current Value</th>
+                      <th class="px-4 py-2">Asset Funds Mix</th>
+                      <th class="px-4 py-2">Transfered</th>
+                      <th class="px-4 py-2">Date</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-purple-800/40 font-mono text-purple-200">
+                  <tbody class="divide-y divide-gray-200 font-medium text-gray-700 divide-x divide-gray-100">
           `;
 
           if (!child.Plans || child.Plans.length === 0) {
-            html += `<tr><td colspan="13" class="px-6 py-4 text-center italic text-purple-400 bg-purple-950/20">No explicit plan records populated for this profile array block.</td></tr>`;
+            html += `<tr><td colspan="13" class="px-6 py-4 text-center italic text-gray-400 bg-gray-50/30">No explicit plan records populated for this profile array block.</td></tr>`;
           } else {
             child.Plans.forEach((plan) => {
               html += `
-                <tr class="hover:bg-purple-950/30 transition">
-                  <td class="px-4 py-2.5 font-bold text-white">
+                <tr class="hover:bg-gray-50/60 transition">
+                  <td class="px-4 py-2.5 font-bold text-gray-900">
                     <div class="flex flex-col">
-                      <span class="text-xs font-bold">${plan["Plan id"] || '—'}</span>
-                      <span class="text-[9px] uppercase font-black px-1.5 py-0.2 w-max rounded mt-0.5 tracking-wider ${plan["Plan Name"]==='IA'?'bg-cyan-950 text-cyan-300 border border-cyan-800':plan["Plan Name"]==='CST'?'bg-amber-950 text-amber-300 border border-amber-800':'bg-purple-950 text-purple-300 border border-purple-700'}">${plan["Plan Name"] || 'PADWA'}</span>
+                      <span class="text-xs tracking-tight font-mono font-bold">${plan["Plan id"] || '—'}</span>
+                      <span class="text-[10px] uppercase font-black px-1 py-0.2 w-max rounded mt-0.5 ${plan["Plan Name"]==='IA'?'bg-sky-100 text-sky-800 border border-sky-200':plan["Plan Name"]==='CST'?'bg-amber-100 text-amber-800 border border-amber-200':'bg-purple-100 text-purple-800 border border-purple-200'}">${plan["Plan Name"] || 'PADWA'}</span>
                     </div>
                   </td>
-                  <td class="px-4 py-2.5 text-white font-bold text-sm">${plan["Age"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-400 font-normal italic">${plan["SINs"] || 'Empty'}</td>
-                  <td class="px-4 py-2.5 text-emerald-400 font-bold">${plan["Paying"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-300">${plan["Frequency"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-300">${plan["Principle"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-400">${plan["CLB"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-400">${plan["Canada Grants"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-purple-400">${plan["Quebec Grants"] || '—'}</td>
-                  <td class="px-4 py-2.5 font-black text-white text-xs bg-purple-950/40">${plan["Current Value"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-900 font-bold">${plan["Age"] || '—'}</td>
+                  <td class="px-4 py-2.5 text-gray-400 font-normal italic">${plan["SINs"] || 'Empty'}</td>
+                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-bold">${plan["Paying"] || '—'}</td>
+                  <td class="px-4 py-2.5 text-gray-600">${plan["Frequency"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-600">${plan["Principle"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["CLB"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["Canada Grants"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-gray-500">${plan["Quebec Grants"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-emerald-700 font-black text-xs bg-emerald-50/20">${plan["Current Value"] || '—'}</td>
                   <td class="px-4 py-2.5">${renderFundsBadge(plan["Funds"])}</td>
-                  <td class="px-4 py-2.5 font-bold ${plan["Transfered"]==='TRUE'?'text-emerald-400':'text-purple-400'}">${plan["Transfered"] || '—'}</td>
-                  <td class="px-4 py-2.5 text-[11px] text-purple-400">${plan["Date"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-bold ${plan["Transfered"]==='TRUE'?'text-emerald-600':'text-gray-400'}">${plan["Transfered"] || '—'}</td>
+                  <td class="px-4 py-2.5 font-mono text-[11px] text-gray-500">${plan["Date"] || '—'}</td>
                 </tr>
               `;
             });
@@ -314,26 +314,26 @@
       }
 
       html += `
-        <h3 class="text-lg font-bold text-white mt-8 mb-4 flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+        <h3 class="text-lg font-bold text-gray-900 mt-8 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
           Account Audit Notes Log (${client["Notes Log"] ? client["Notes Log"].length : 0})
         </h3>
-        <div class="bg-purple-900 rounded-xl border border-purple-800 divide-y divide-purple-800/40 overflow-hidden shadow-xl">
       `;
 
       if (!client["Notes Log"] || client["Notes Log"].length === 0) {
-        html += `<div class="p-6 text-center text-sm italic text-purple-400">No narrative entries recorded for this client spreadsheet workbook sheet.</div>`;
+        html += `<div class="bg-white rounded-xl shadow-xs border border-gray-200 p-6 text-center text-sm italic text-gray-400">No narrative entries recorded for this client spreadsheet workbook sheet.</div>`;
       } else {
+        html += `<div class="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden shadow-2xs">`;
         client["Notes Log"].forEach((log) => {
           html += `
-            <div class="p-4 hover:bg-purple-950/20 transition flex items-start gap-4 text-xs font-mono">
-              <span class="font-bold text-emerald-400 bg-purple-950 border border-purple-800 px-2.5 py-1 rounded-md min-w-[95px] text-center shadow-inner">${log.Date || 'No Date'}</span>
-              <p class="text-purple-200 leading-relaxed font-semibold pt-0.5">${log.Note || 'Empty text log captured'}</p>
+            <div class="p-4 hover:bg-gray-50/50 transition flex items-start gap-4 text-xs">
+              <span class="font-mono font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md min-w-[95px] text-center shadow-3xs">${log.Date || 'No Date'}</span>
+              <p class="text-gray-700 leading-relaxed font-medium pt-0.5">${log.Note || 'Empty text log captured'}</p>
             </div>
           `;
         });
+        html += `</div>`;
       }
-      html += `</div>`;
 
       dossierContent.innerHTML = html;
     }
