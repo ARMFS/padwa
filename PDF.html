@@ -65,6 +65,7 @@
         function parseRESPText(text) {
             const data = {};
 
+            // 1. Basic Info
             const contractMatch = text.match(/Contract no\.\s*:?\s*(\d+)/i);
             if (contractMatch) data.contractId = parseInt(contractMatch[1], 10);
 
@@ -74,12 +75,20 @@
                 data.statementDate = dateObj.toISOString().split('T')[0];
             }
 
+            // Generate the dummy URL based on the extracted contract ID
+            if (data.contractId) {
+                data.statementURL = `https://s3.file.com/${data.contractId}.pdf`;
+            } else {
+                data.statementURL = `https://s3.file.com/unknown_contract.pdf`;
+            }
+
             const balanceMatch = text.match(/Total of your investments[^\$]+\$([\d,]+\.\d{2})/i);
             if (balanceMatch) data.balanceTotal = parseFloat(balanceMatch[1].replace(/,/g, ''));
 
             const rateMatch = text.match(/Investment funds:?\s*([\d\.]+)%/i);
             if (rateMatch) data.rateYTD = parseFloat(rateMatch[1]) / 100;
 
+            // 2. Fund Details
             const padRegex = /([\d]+-NSC-[^"$\n]+)\s*\$([\d,]+\.\d{2})/g;
             const padDict = {};
             for (const match of text.matchAll(padRegex)) {
@@ -104,6 +113,7 @@
             }
             data.Funds = funds;
 
+            // 3. Contributions
             function getCumulative(labelPattern) {
                 // Find the label, skip the first dollar amount (current year), grab the second (cumulative)
                 const regex = new RegExp(labelPattern + '[^\\$]+\\$[\\d,]+\\.\\d{2}[^\\$]+\\$([\\d,]+\\.\\d{2})', 'i');
@@ -111,11 +121,10 @@
                 return match ? parseFloat(match[1].replace(/,/g, '')) : 0;
             }
 
-            // Removed FederalTotal
             data.assistedCont = getCumulative("Assisted contributions");
             data.unassistedCont = getCumulative("Unassisted contributions");
             data.grantsReceived = getCumulative("Grants received");
-            data.provGrant = getCumulative("Provincial grant"); // Simplified to avoid dash/hyphen issues
+            data.provGrant = getCumulative("Provincial grant"); 
             data.canadaLearning = getCumulative("Canada Learning Bond");
 
             return data;
