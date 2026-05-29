@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RESP PDF to JSON Extractor</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
         .upload-area { border: 2px dashed #ccc; padding: 40px; text-align: center; border-radius: 8px; margin-bottom: 20px; background-color: #f9f9f9; }
-        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; min-height: 200px; }
+        pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; min-height: 200px; white-space: pre-wrap; word-wrap: break-word;}
         button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #0056b3; color: white; border: none; border-radius: 4px;}
         button:hover { background-color: #004494; }
     </style>
@@ -24,12 +24,11 @@
         <p id="file-name" style="margin-top: 15px; color: #555;"></p>
     </div>
 
-    <h3>Extracted JSON:</h3>
+    <h3>Output:</h3>
     <pre id="json-output">Awaiting file upload...</pre>
 
     <script>
-        // Initialize PDF.js worker
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
         document.getElementById('pdf-upload').addEventListener('change', async function(e) {
             const file = e.target.files[0];
@@ -38,42 +37,40 @@
             document.getElementById('file-name').innerText = `Processing: ${file.name}...`;
             document.getElementById('json-output').innerText = "Extracting text from PDF...";
 
+            let fullText = "";
+
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                let fullText = "";
-
-                // Loop through all pages to grab the text
+                
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
                     const textContent = await page.getTextContent();
                     const pageStrings = textContent.items.map(item => item.str);
-                    // Join strings with a space or newline based on your PDF structure
                     fullText += pageStrings.join(" ") + "\n"; 
                 }
 
-                // Now parse the extracted text
                 const jsonData = parseRESPText(fullText);
                 document.getElementById('json-output').innerText = JSON.stringify(jsonData, null, 2);
                 document.getElementById('file-name').innerText = `Finished: ${file.name}`;
 
             } catch (error) {
-                console.error(error);
-                document.getElementById('json-output').innerText = "Error parsing PDF. Check console for details.";
+                console.error("FULL ERROR:", error);
+                document.getElementById('json-output').innerText = 
+                    "ERROR OCCURRED: " + error.message + 
+                    "\n\n--- RAW TEXT EXTRACTED (Share this to fix the regex) ---\n\n" + fullText;
             }
         });
 
         function parseRESPText(text) {
             const data = {};
 
-            // 1. Basic Info
             const contractMatch = text.match(/Contract no\.\s*:?\s*(\d+)/i);
             if (contractMatch) data.contractId = parseInt(contractMatch[1], 10);
 
             const dateMatch = text.match(/As at ([A-Z][a-z]+ \d{1,2}, \d{4})/i);
             if (dateMatch) {
                 const dateObj = new Date(dateMatch[1]);
-                // Format to YYYY-MM-DD
                 data.statementDate = dateObj.toISOString().split('T')[0];
             }
 
@@ -83,11 +80,9 @@
             const rateMatch = text.match(/Investment funds:?\s*([\d\.]+)%/i);
             if (rateMatch) data.rateYTD = parseFloat(rateMatch[1]) / 100;
 
-            // 2. Fund Details
             const padRegex = /([\d]+-NSC-[^"$\n]+)\s*\$([\d,]+\.\d{2})/g;
             const padDict = {};
             for (const match of text.matchAll(padRegex)) {
-                // Look specifically in the PAD section layout
                 padDict[match[1].trim()] = parseFloat(match[2].replace(/,/g, ''));
             }
 
@@ -95,7 +90,6 @@
             const frequency = freqMatch ? freqMatch[1].toLowerCase() + 'ly' : 'monthly';
 
             const funds = [];
-            // Regex tailored to grab Fund Name, Value, and Rate of Return from the table
             const fundRegex = /([\d]+-NSC-[A-Za-z\.\s\(\)-]+?)\s*(?:[\d\.]+\s*)?(?:\$[\d\.,]+\s*)?\$([\d,]+\.\d{2})\s*([\d\.]+)%/g;
             
             for (const match of text.matchAll(fundRegex)) {
@@ -110,19 +104,18 @@
             }
             data.Funds = funds;
 
-            // 3. Contributions
             function getCumulative(labelPattern) {
                 // Find the label, skip the first dollar amount (current year), grab the second (cumulative)
                 const regex = new RegExp(labelPattern + '[^\\$]+\\$[\\d,]+\\.\\d{2}[^\\$]+\\$([\\d,]+\\.\\d{2})', 'i');
                 const match = text.match(regex);
-                return match ? parseFloat(match[1].replace(/,/g, '')) : 0.0;
+                return match ? parseFloat(match[1].replace(/,/g, '')) : 0;
             }
 
-            data.FederalTotal = getCumulative("Assisted contributions");
+            // Removed FederalTotal
             data.assistedCont = getCumulative("Assisted contributions");
             data.unassistedCont = getCumulative("Unassisted contributions");
             data.grantsReceived = getCumulative("Grants received");
-            data.provGrant = getCumulative("Provincial grant[^-]+-[^\\$]+");
+            data.provGrant = getCumulative("Provincial grant"); // Simplified to avoid dash/hyphen issues
             data.canadaLearning = getCumulative("Canada Learning Bond");
 
             return data;
